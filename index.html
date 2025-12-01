@@ -20,15 +20,16 @@
       }
 
       body {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        background: #2D0066;
-        color: #CCFF00;
+        font-family: sans-serif;
+        background: #2d0066;
+        color: #ccff00;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         padding: 2rem;
         letter-spacing: -0.01em;
+        overflow-x: hidden;
       }
 
       main {
@@ -40,35 +41,255 @@
       }
 
       h1 {
-        font-size: clamp(2.5rem, 8vw, 6rem);
+        font-size: clamp(2rem, 6vw, 4rem);
         font-weight: 400;
-        line-height: 1.05;
+        line-height: 1.2;
         letter-spacing: -0.03em;
         margin-bottom: 3rem;
+        perspective: 1000px;
+      }
+
+      .hero-text {
+        display: inline;
+        cursor: pointer;
+      }
+
+      .hero-text .letter {
+        display: inline-block;
+        position: relative;
+        transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+        font-feature-settings:
+          "liga" 1,
+          "calt" 1;
+        transform-style: preserve-3d;
+        text-shadow:
+          1px 1px 0 rgba(180, 220, 0, 0.9),
+          2px 2px 0 rgba(150, 190, 0, 0.7),
+          3px 3px 0 rgba(120, 160, 0, 0.5),
+          4px 4px 0 rgba(90, 130, 0, 0.3),
+          5px 5px 0 rgba(60, 100, 0, 0.2),
+          6px 6px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .hero-text .letter:hover {
+        font-feature-settings:
+          "ss01" 1,
+          "ss02" 1,
+          "swsh" 1;
+        transform: translateY(-8px) translateZ(30px) rotateX(-5deg);
+        text-shadow:
+          1px 1px 0 rgba(180, 220, 0, 1),
+          2px 2px 0 rgba(150, 190, 0, 0.9),
+          3px 3px 0 rgba(120, 160, 0, 0.8),
+          4px 4px 0 rgba(90, 130, 0, 0.6),
+          5px 5px 0 rgba(60, 100, 0, 0.4),
+          6px 6px 0 rgba(40, 80, 0, 0.3),
+          8px 8px 0 rgba(20, 60, 0, 0.2),
+          10px 15px 25px rgba(0, 0, 0, 0.6),
+          0 0 40px rgba(204, 255, 0, 0.5);
+        color: #eeff88;
+      }
+
+      .hero-text .letter.breathing {
+        animation: breathe 3s ease-in-out infinite;
+        animation-delay: var(--delay);
+      }
+
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: translateY(0) translateZ(0) scale(1) rotateY(0deg);
+          filter: brightness(1);
+        }
+        50% {
+          transform: translateY(-12px) translateZ(20px) scale(1.05)
+            rotateY(5deg);
+          filter: brightness(1.2);
+          text-shadow:
+            1px 1px 0 rgba(180, 220, 0, 1),
+            2px 2px 0 rgba(150, 190, 0, 0.9),
+            3px 3px 0 rgba(120, 160, 0, 0.7),
+            4px 4px 0 rgba(90, 130, 0, 0.5),
+            5px 5px 0 rgba(60, 100, 0, 0.3),
+            6px 6px 0 rgba(40, 80, 0, 0.2),
+            8px 12px 20px rgba(0, 0, 0, 0.5),
+            0 0 30px rgba(204, 255, 0, 0.4);
+        }
+      }
+
+      .hero-text .letter::before {
+        content: attr(data-char);
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: transparent;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 200, 0.8) 0%,
+          rgba(204, 255, 0, 0) 50%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      .hero-text .letter::after {
+        content: attr(data-char);
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        color: rgba(20, 0, 50, 0.8);
+        z-index: -1;
+        filter: blur(3px);
+        opacity: 0.7;
+        pointer-events: none;
+        transition: all 0.2s ease;
+      }
+
+      .hero-text .letter:hover::after {
+        left: 8px;
+        top: 8px;
+        filter: blur(6px);
+        opacity: 0.9;
+      }
+
+      .hero-text .letter.space {
+        width: 0.3em;
+      }
+
+      .wave-active .letter {
+        animation: wave 0.8s ease-out forwards !important;
+        animation-delay: var(--wave-delay) !important;
+      }
+
+      @keyframes wave {
+        0% {
+          transform: translateY(0) translateZ(0) rotateX(0) rotateY(0);
+        }
+        40% {
+          transform: translateY(-50px) translateZ(80px) rotateX(-25deg)
+            rotateY(15deg);
+          text-shadow:
+            2px 2px 0 rgba(180, 220, 0, 1),
+            4px 4px 0 rgba(150, 190, 0, 0.9),
+            6px 6px 0 rgba(120, 160, 0, 0.7),
+            8px 8px 0 rgba(90, 130, 0, 0.5),
+            10px 10px 0 rgba(60, 100, 0, 0.3),
+            12px 12px 0 rgba(40, 80, 0, 0.2),
+            15px 25px 40px rgba(0, 0, 0, 0.7),
+            0 0 80px rgba(204, 255, 0, 0.6);
+          color: #ffffff;
+        }
+        100% {
+          transform: translateY(0) translateZ(0) rotateX(0) rotateY(0);
+        }
       }
 
       .tagline {
-        font-size: 0.75rem;
+        font-size: 1rem;
         font-weight: 400;
         letter-spacing: 0.02em;
         text-transform: uppercase;
-        color: #CCFF00;
+        color: #ccff00;
       }
 
       footer {
         font-size: 0.625rem;
         letter-spacing: 0.04em;
         text-transform: uppercase;
-        color: #CCFF00;
+        color: #ccff00;
         padding-top: 4rem;
       }
     </style>
   </head>
   <body>
     <main>
-      <h1>Where letters learn to breathe.</h1>
+      <h1><span class="hero-text" id="hero"></span></h1>
       <p class="tagline">A new algotypographic foundry. Coming soon.</p>
     </main>
     <footer>sssuper.io © 2025</footer>
+
+    <script>
+      const text = "Where letters learn to breathe.";
+      const hero = document.getElementById("hero");
+
+      text.split("").forEach((char, i) => {
+        const span = document.createElement("span");
+        span.className = char === " " ? "letter space" : "letter breathing";
+        span.textContent = char === " " ? "\u00A0" : char;
+        span.setAttribute("data-char", char === " " ? "\u00A0" : char);
+        span.style.setProperty("--delay", `${i * 0.12}s`);
+        span.style.setProperty("--wave-delay", `${i * 0.04}s`);
+        hero.appendChild(span);
+      });
+
+      hero.addEventListener("click", () => {
+        hero.classList.remove("wave-active");
+        void hero.offsetWidth;
+        hero.classList.add("wave-active");
+
+        setTimeout(() => {
+          hero.classList.remove("wave-active");
+        }, 2500);
+      });
+
+      let mouseX = 0,
+        mouseY = 0;
+      const letters = document.querySelectorAll(".letter:not(.space)");
+
+      document.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        letters.forEach((letter) => {
+          const rect = letter.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+
+          const distX = mouseX - centerX;
+          const distY = mouseY - centerY;
+          const distance = Math.sqrt(distX * distX + distY * distY);
+
+          const maxDist = 300;
+          const influence = Math.max(0, 1 - distance / maxDist);
+
+          if (influence > 0 && !hero.classList.contains("wave-active")) {
+            const moveX = distX * influence * 0.08;
+            const moveY = distY * influence * 0.08;
+            const rotateY = distX * influence * 0.1;
+            const rotateX = -distY * influence * 0.1;
+            const scale = 1 + influence * 0.15;
+            const z = influence * 40;
+
+            const shadowLayers = Math.floor(influence * 8) + 4;
+            let shadowStr = "";
+            for (let i = 1; i <= shadowLayers; i++) {
+              const opacity = 1 - (i / shadowLayers) * 0.7;
+              const green = Math.max(0, 220 - i * 25);
+              shadowStr += `${i}px ${i}px 0 rgba(${180 - i * 15}, ${green}, 0, ${opacity}), `;
+            }
+            shadowStr += `${shadowLayers + 5}px ${shadowLayers + 10}px 30px rgba(0, 0, 0, ${0.4 + influence * 0.3}), `;
+            shadowStr += `0 0 ${influence * 50}px rgba(204, 255, 0, ${influence * 0.5})`;
+
+            letter.style.textShadow = shadowStr;
+            letter.style.transform = `
+              translate(${moveX}px, ${moveY}px)
+              translateZ(${z}px)
+              rotateX(${rotateX}deg)
+              rotateY(${rotateY}deg)
+              scale(${scale})
+            `;
+            letter.style.color = `rgb(${204 + influence * 51}, ${255}, ${influence * 100})`;
+            letter.style.filter = `brightness(${1 + influence * 0.3})`;
+          } else if (!hero.classList.contains("wave-active")) {
+            letter.style.textShadow = "";
+            letter.style.transform = "";
+            letter.style.color = "";
+            letter.style.filter = "";
+          }
+        });
+      });
+    </script>
   </body>
 </html>
