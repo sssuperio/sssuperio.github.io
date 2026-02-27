@@ -113,6 +113,32 @@
         animation: tape 12s linear infinite;
       }
 
+      .cta-wrap {
+        margin-top: clamp(16px, 2.2vw, 24px);
+      }
+
+      .cta {
+        display: inline-block;
+        border: 3px solid var(--line);
+        background: var(--accent);
+        color: var(--bg);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: clamp(14px, 1.6vw, 18px);
+        padding: 10px 14px;
+        box-shadow: 6px 6px 0 var(--line);
+        transition:
+          transform 120ms ease,
+          box-shadow 120ms ease;
+      }
+
+      .cta:hover,
+      .cta:focus-visible {
+        transform: translate(2px, 2px);
+        box-shadow: 4px 4px 0 var(--line);
+      }
+
       footer {
         margin-top: clamp(16px, 2.8vw, 30px);
         padding-top: clamp(12px, 1.5vw, 18px);
@@ -175,6 +201,15 @@
           >Algorithmic Type Systems / Algorithmic Foundry / Brutalist Interfaces
           / sssuper.io /
         </span>
+      </div>
+      <div class="cta-wrap">
+        <a
+          class="cta"
+          href="https://chirone.sssuper.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Chirone molecular/pixel font editor</a
+        >
       </div>
       <footer>
         <span>Launching soon</span>
